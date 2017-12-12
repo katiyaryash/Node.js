@@ -1,0 +1,75 @@
+extends layout
+block content
+    br
+    br
+    h3  Upload and Download Files 
+    br
+    // <button onClick="uploadFile" class="btn btn-raised">Upload</button>
+    label.btn.btn-raised(for="upload") Upload
+    |     
+    input#upload.hidden(type="file", onchange="uploadFile(event)")
+    |     
+    #li
+      ol#download
+      |         
+      #toast
+    |     
+    script.
+      var downloadDOM = document.getElementById('download');
+      var toastDOM = document.getElementById('toast');
+      showUploadedFiles();
+      function uploadFile(event) {
+      console.log('inside uploadFile')
+      let target = event.target || event.srcElement || event.currentTarget;
+      let file = target.files[0];
+      let xhr = new XMLHttpRequest();
+      xhr.open('POST', '/upload/' + file.name, true);
+      xhr.setRequestHeader('Content-Type', 'application/octate-stream');
+      xhr.onreadystatechange = function() {
+      event = null;
+      if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+      showToastMessage(xhr.responseText, 'success');
+      showUploadedFiles();
+      } else {
+      showToastMessage(xhr.responseText, 'error');
+      }
+      }
+      }
+      xhr.send();
+      event.target.value = "";
+      }
+      function showUploadedFiles() {
+      let xhr = new XMLHttpRequest();
+      xhr.open('GET', '/list', true);
+      xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4) {
+      if (xhr.status === 200) {
+      let listOfFile = JSON.parse(xhr.responseText);
+      let listOfFileHTML = ""
+      for (var i = 0; i < listOfFile.length; i++) {
+      listOfFileHTML = listOfFileHTML + "<li> <a href='/download/" + listOfFile[i] + "'>" + listOfFile[i] + "</a></li>"
+      }
+      downloadDOM.innerHTML = listOfFileHTML;
+      } else {
+      }
+      }
+      }
+      xhr.send();
+      }
+      function showToastMessage(msg, type) {
+      console.log('inside showtoast mesage', msg, type)
+      toastDOM.innerText = msg;
+      if (type === 'error') {
+      toastDOM.classList.add('toast-visible-error');
+      setTimeout(function() {
+      toastDOM.classList.remove('toast-visible-error')
+      }, 3000);
+      } else {
+      console.log('toastdom', toastDOM)
+      toastDOM.classList.add('toast-visible-success');
+      setTimeout(function() {
+      toastDOM.classList.remove('toast-visible-success')
+      }, 3000);
+      }
+      }

@@ -1,0 +1,39 @@
+extends layout
+block content
+    br
+    p.meta Logged In as  
+        a(href='/userinfo/show/#{user.username}') #{user.name}  
+    each user,i in users
+        br
+        a(href='/userinfo/show/#{user.username}') #{user.username}  
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    //- if posts
+    //- each post,i in posts
+    //-     .post
+    //-         h1
+    //-             a(href='/posts/show/#{post._id}')
+    //-                 =post.title
+    //-         p.meta Posted in 
+    //-             a(href='/categories/show/#{post.category}') #{post.category} 
+    //-             by #{post.author} on #{moment(post.date).format("MM-DD-YYYY")}
+    //-         img(src='/images/uploads/#{post.mainimage}')
+    //-         !=post.body
+    //-         a.more(href='/posts/show/#{post._id}') Read More
+    //- else
+    //-     p There are no posts to display
+    

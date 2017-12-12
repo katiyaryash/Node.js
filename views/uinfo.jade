@@ -1,0 +1,19 @@
+extends layout
+
+block content
+    if users
+    
+        .user
+        
+            h1
+               
+                    =user.name
+           
+                
+            img(src='/images/uploads/#{user.mainimage}')
+            !=user.email
+            br
+            !=user.team
+    else
+        p There are no Users currently
+    

@@ -1,0 +1,36 @@
+extends layout
+
+block content
+  #container
+    #namesWrapper
+        br
+        |             
+        p Create Username:
+        |             
+        #error
+        |             
+        form#usernameForm
+          input#username(size='35')
+          |                 
+          input(type='submit', value='submit')
+              
+    #mainWrapper
+       
+        |             
+        #chatWrapper
+          #chatWindow
+          |                 
+          form#messageForm
+            input#message(size='35', placeholder='Type Something')
+            |                     
+            input(type='submit', value='Say!')
+        |             
+        #userWrapper
+          #users
+    |     
+    script(src='http://code.jquery.com/jquery-latest.min.js')
+    |     
+    script(src='/socket.io/socket.io.js')
+    |     
+    script(src='/myscript.js')
+      
